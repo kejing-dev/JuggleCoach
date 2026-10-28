@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Eye gaze for the dwell discs (runtime permission; refused -> head direction, S13). No network, no camera,
+         no microphone, no hand tracking, no spatial sensing (design `container.permissions`). -->
+    <uses-permission android:name="com.picovr.permission.EYE_TRACKING" />
+
+    <application
+        android:name=".platform.SpatialApplication"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JuggleCoach"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".platform.LaunchActivity"
+            android:exported="true"
+            android:theme="@style/Theme.JuggleCoach">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- DefaultStage: one Mixed Stage (passthrough), the only container of the app -->
+            <meta-data
+                android:name="pico.spatial.stage.id"
+                android:value="JuggleCoachStage" />
+            <!-- "1": StageStyle.Mixed: virtual content and the real room at full intensity -->
+            <meta-data
+                android:name="pico.spatial.stage.style"
+                android:value="1" />
+            <meta-data
+                android:name="pico.spatial.stage.immersion"
+                android:value="0" />
+            <meta-data
+                android:name="pico.spatial.stage.immersion_min"
+                android:value="0" />
+            <meta-data
+                android:name="pico.spatial.stage.immersion_max"
+                android:value="0" />
+        </activity>
+
+        <!-- Transparent helper for the eye-tracking permission dialog. -->
+        <activity
+            android:name=".platform.EyePermissionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.JuggleCoach" />
+    </application>
+
+</manifest>
